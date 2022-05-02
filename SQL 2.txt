@@ -1,0 +1,78 @@
+1:
+select YEAR(enrolment_date) as Anno, count(*) as N_iscritti
+FROM students 
+GROUP BY YEAR(enrolment_date) ORDER BY YEAR(enrolment_date) desc  
+
+-------------------------------------------------------------------------
+
+2: 
+SELECT office_address as Ufficio, count(*) as N_insegnanti
+FROM teachers 
+GROUP BY office_address
+
+----------------------------------------------------------------------------------
+3:
+SELECT exam_id as Appello, AVG(vote) as media_voto
+FROM exam_student 
+GROUP BY exam_id
+
+----------------------------------------------------------------------------------
+
+4:
+SELECT department_id as dipartimento, count(*) as N_corsi
+FROM degrees 
+GROUP BY department_id
+
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+
+1:
+SELECT * 
+FROM students
+INNER JOIN degrees
+on students.degree_id = degrees.id
+WHERE degrees.name = 'Corso di Laurea in Economia'
+
+-------------------------------------------------------------------------------------
+
+2: Selezionare tutti i Corsi di Laurea del Dipartimento di Neuroscienze
+
+SELECT * 
+FROM degrees
+INNER JOIN departments
+on degrees.department_id = departments.id
+WHERE departments.name = 'Dipartimento di Neuroscienze'
+
+-----------------------------------------------------------------------------------
+
+3: Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
+
+SELECT * 
+FROM courses
+JOIN course_teacher
+on course_teacher.course_id = courses.id
+JOIN teachers
+on course_teacher.teacher_id = teachers.id
+WHERE teachers.name = 'Fulvio' and teachers.surname = 'Amato'
+
+------------------------------------------------------------------------------------
+4: Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il
+relativo dipartimento, in ordine alfabetico per cognome e nome
+
+SELECT students.name, students.surname, degrees.name, departments.name
+FROM students
+JOIN degrees
+on students.degree_id = degrees.id
+JOIN departments
+on degrees.department_id = departments.id
+GROUP BY students.name, students.surname, degrees.name, departments.name
+ORDER BY students.surname ASC
+
+-------------------------------------------------------------------------------------------------
+5:
+
+Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+
+
+
